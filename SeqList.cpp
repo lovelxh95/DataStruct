@@ -51,3 +51,64 @@ bool ListInsertAt(SeqList &L, int index, int e){
     L.length++;
     return true;
 }
+
+// 删除指定位置的元素
+bool ListDeleteAt(SeqList &L, int index, int &e){
+    if(index < 0 || index >= L.length){
+        return false; // 索引无效
+    }
+    e = L.data[index];
+    for(int i = index; i < L.length - 1; i++){
+        L.data[i] = L.data[i + 1]; // 元素前移
+    }
+    L.length--;
+    return true;
+}
+
+// 获取指定位置的元素
+bool GetElem(SeqList L, int index, int &e){
+    if(index < 0 || index >= L.length){
+        return false; // 索引无效
+    }
+    e = L.data[index];
+    return true;
+}
+
+// 获取顺序表长度
+int ListLength(SeqList L){
+    return L.length;
+}
+
+// 根据值查找元素位置
+int LocateElem(SeqList L, int e){
+    for(int i = 0; i < L.length; i++){
+        if(L.data[i] == e){
+            return i; // 返回元素位置
+        }
+    }
+    return -1; // 未找到元素
+}
+
+int main(){
+    SeqList L;
+    InitList(L);
+
+    ListInsert(L, 10);
+    ListInsert(L, 20);
+    ListInsertAt(L, 1, 15);
+
+    int e;
+    GetElem(L, 1, e);
+    cout << "Element at index 1: " << e << endl;
+
+    int index = LocateElem(L, 20);
+    cout << "Index of element 20: " << index << endl;
+
+    ListDeleteAt(L, 1, e);
+    cout << "Deleted element: " << e << endl;
+
+    cout << "List length: " << ListLength(L) << endl;
+
+    DestroyList(L);
+    return 0;
+}
